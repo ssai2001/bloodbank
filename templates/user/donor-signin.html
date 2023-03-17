@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/message-number-style.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="card p-4 shadow-lg">
+                    <div class="card-body pb-0 row">
+                        {% if request.get_full_path|stringformat:"s" == "/user/donor/signin" %}
+                            <div class="col-6 rounded-top bg-info">
+                                <a class="btn btn-info" href="{% url 'donor_signin' %}">
+                                    <h4>Donor Sign-In</h4>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="col-6" style="text-align:end;">
+                            <a class="btn btn-light" href="{% url 'hospital_signin' %}"><h4>Hospital Sign-In</h4></a>
+                        </div>
+                    </div>
+                    <div class="card-body bg-info rounded-bottom">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class={{message.tags}} >{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                        <form class="needs-validation" action="{% url 'donor_signin' %}" method="post" onsubmit="return validate();">
+                            {% csrf_token %}
+                            <div class="mb-1">
+                                <label for="username">Username<span class="text-danger">*</span></label>
+                                <input type="text" name="username" id="username" class="form-control">
+                                <small><label for="username_error" id="username_error" class="text-danger"></label></small>
+                            </div>
+                            <div class="mb-1">
+                                <label for="password">Password<span class="text-danger">*</span></label>
+                                <input type="password" name="password" id="password" class="form-control">
+                                <small><label for="password_error" id="password_error" class="text-danger"></label></small>
+                            </div>
+                            {% if request.GET.next %}
+                                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                            {% endif %}
+                            <input type="submit" value="Sign-In" class="btn btn-primary w-100 my-2">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/donor-sign-in-validator.js' %}"></script>
+{% endblock js %}

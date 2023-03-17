@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/message-number-style.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="card p-4 shadow-lg">
+                    <div class="card-body pb-0 row">
+                        {% if request.get_full_path|stringformat:"s" == "/user/donor/signup" %}
+                            <div class="col-6 rounded-top bg-info">
+                                <a class="btn btn-info" href="{% url 'donor_signup' %}">
+                                    <h4>Donor Sign-Up</h4>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="col-6" style="text-align:end;">
+                            <a class="btn btn-light" href="{% url 'hospital_signup' %}"><h4>Hospital Sign-Up</h4></a>
+                        </div>
+                    </div>
+                    <div class="card-body bg-info rounded-bottom">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class={{message.tags}} >{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                        <form class="needs-validation" action="{% url 'donor_signup' %}" method="post" onsubmit="return validate();">
+                            {% csrf_token %}
+                            <div class="mb-1">
+                                <label for="first_name">First name<span class="text-danger">*</span></label>
+                                <input type="text" name="first_name" id="first_name" class="form-control">
+                                <small><label for="first_name_error" id="first_name_error" class="text-danger"></label></small>
+                            </div>
+                            <div class="mb-1">
+                                <label for="last_name">Last name<span class="text-danger">*</span></label>
+                                <input type="text" name="last_name" id="last_name" class="form-control">
+                                <small><label for="last_name_error" id="last_name_error" class="text-danger"></label></small>
+                            </div>
+                            <div class="mb-1">
+                                <label for="exampleDataList" class="form-label">Blood Group<span class="text-danger">*</span></label>
+                                <input class="form-control" name="bloodgroup" list="BloodGroupOptions" id="BloodGroup" placeholder="Type to search...">
+                                <datalist id="BloodGroupOptions">
+                                    <option value="O+ve">
+                                    <option value="O-ve">
+                                    <option value="A+ve">
+                                    <option value="A-ve">
+                                    <option value="B+ve">
+                                    <option value="B-ve">
+                                    <option value="AB+ve">
+                                    <option value="AB-ve">
+                                </datalist>
+                                <small><label for="blood_group_error" id="blood_group_error" class="text-danger"></label></small>
+                            </div>
+                            <div class="mb-1">
+                                <label for="username">Username<span class="text-danger">*</span></label>
+                                <input type="text" name="username" id="username" class="form-control">
+                                <small><label for="username_error" id="username_error" class="text-danger"></label></small>
+                            </div>
+                            <div class="mb-1">
+                                <label for="email">Email<span class="text-danger">*</span></label>
+                                <input type="text" name="email" id="email" class="form-control">
+                                <small><label for="email_error" id="email_error" class="text-danger"></label></small>
+                            </div>
+                            <div class="mb-1">
+                                <label for="password">Password<span class="text-danger">*</span></label>
+                                <p><small class="text-muted">Password should be 8 - 16 character long & should contain at-least
+                                        one uppercase, one lowercase, one number and one special character[~!@#$%^&*]</small></p>
+                                <input type="password" name="password" id="password" class="form-control">
+                                <small><label for="password_error" id="password_error" class="text-danger"></label></small>
+                            </div>
+                            <div class="mb-1">
+                                <label for="password2">Confirm Password<span class="text-danger">*</span></label>
+                                <input type="password" name="password2" id="password2" class="form-control">
+                                <small><label for="password2_error" id="password2_error" class="text-danger"></label></small>
+                            </div>
+                            <input type="submit" value="Register" class="btn btn-primary w-100 my-2">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/donor-sign-up-validator.js' %}"></script>
+{% endblock js %}

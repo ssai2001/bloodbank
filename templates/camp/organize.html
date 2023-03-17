@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7 mx-auto">
+            <div class="card p-4 shadow-lg">
+                <div class="card-header">
+                    <u class="display-6">Organize-Camp</u>
+                </div>
+                <div class="card-body bg-info rounded-bottom">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class={{message.tags}} >{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                    <form class="needs-validation" action="{% url 'organize' %}" method="post" >
+                        {% csrf_token %}
+                        <div class="mb-1">
+                            <label for="organizationName">Organization Name<span class="text-danger">*</span></label>
+                            <input type="text" name="organizationName" id="organizationName" class="form-control">
+                            <small><label for="organizationName_error" id="organizationName_error" class="text-danger"></label></small>
+                        </div>
+                        <div class="mb-1">
+                            <label for="fullname">Full Name<span class="text-danger">*</span></label>
+                            <input type="text" name="fullname" id="fullname" class="form-control">
+                            <small><label for="fullname_error" id="fullname_error" class="text-danger"></label></small>
+                        </div>
+                        <div class="mb-1">
+                            <label for="email">Email<span class="text-danger">*</span></label>
+                            <input type="email" name="email" id="email" class="form-control">
+                            <small><label for="email_error" id="email_error" class="text-danger"></label></small>
+                        </div>
+                        <div class="mb-1">
+                            <label for="date">Date<span class="text-danger">*</span></label>
+                            <input type="date" name="date" id="date" class="form-control">
+                            <small><label for="date_error" id="date_error" class="text-danger"></label></small>
+                        </div>
+                        <div class="mb-1">
+                            <label for="shortDescription">Description<span class="text-danger">*</span></label>
+                            <textarea type="text" name="shortDescription" id="shortDescription" class="form-control" rows="4" style="resize: none;"></textarea>
+                            <small><label for="shortDescription_error" id="shortDescription_error" class="text-danger"></label></small>
+                        </div>
+                        {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                        {% endif %}
+                        <input type="submit" value="Register for Camp" class="btn btn-primary w-100 my-2">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 mx-auto">
+            <div class="card p-4 shadow-lg">
+                <div class="card-header">
+                    <u class="display-6">Start Camp</u>
+                </div>
+                <div class="card-body bg-info rounded-bottom">
+                    {% comment %} {% if messages %}
+                        {% for message in messages %}
+                            <p class={{message.tags}} >{{message}}</p>
+                        {% endfor %}
+                    {% endif %} {% endcomment %}
+                    <form class="needs-validation" action="{% url 'startCamp' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-1">
+                            <label for="email">Email<span class="text-danger">*</span></label>
+                            <input type="email" name="email" id="email" class="form-control">
+                            <small><label for="email_error" id="email_error" class="text-danger"></label></small>
+                        </div>
+                        <div class="mb-1">
+                            <label for="password">Password<span class="text-danger">*</span></label>
+                            <input type="number" name="password" id="password" class="form-control">
+                            <small><label for="password_error" id="password_error" class="text-danger"></label></small>
+                        </div>
+                        {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                        {% endif %}
+                        <input type="submit" value="Start-Camp" class="btn btn-primary w-100 my-2">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

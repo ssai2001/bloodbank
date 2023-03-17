@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bs5/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    
+    {% block css %}
+    
+    {% endblock css %}
+    <title>Blood Bank</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-dark navbar-expand-lg sticky-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href='{% url 'index' %}'>Blood-Bank</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Welcome {{user.first_name}}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">Order Blood</a></li>
+                                    <li><a class="dropdown-item" href="#">Track Order</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Order History</a></li>
+                                </ul>
+                            </li>
+                            <div class="vr text-light"></div>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href='{% url 'logout' %}'>Logout</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Welcome {{user.first_name}} {{user.last_name}}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">Donate Blood</a></li>
+                                    <li><a class="dropdown-item" href="#">Coupons</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Active Participations</a></li>
+                                </ul>
+                            </li>
+                            <div class="vr text-light"></div>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href='{% url 'logout' %}'>Logout</a>
+                            </li>
+                            {% endif %}
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href='{% url 'organize' %}'>Organise Camp</a>
+                        </li>
+                        <div class="vr text-light d-none d-sm-block"></div>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href='{% url 'donor_signin' %}'>Sign-In</a>
+                        </li>
+                        <div class="vr text-light d-none d-sm-block"></div>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href='{% url 'donor_signup' %}'>Sign-Up</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block content %}
+
+        {% endblock content %}
+        <footer class="footer mt-auto bg-dark p-3 text-light text-center">
+            Blood-Bank &copy; 2023
+        </footer>
+    </div>
+</body>
+<script src="{% static 'bs5/js/bootstrap.bundle.js' %}"></script>
+{% block js %}
+
+{% endblock js %}
+</html>
