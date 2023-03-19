@@ -1,6 +1,81 @@
 {% extends 'base.html' %}
+{% load custom_template %}
+
+{% block css %}
+    
+{% endblock css %}
 
 {% block content %}
-    <h1>{{user.organizationName}} welcomes you to the Blood Donation Camp</h1>
+    <h1>{{user.organizationName}}</h1> 
+    <h1>welcomes you to the Blood Donation Camp</h1>
     <h2>Donations done under supervision of {{user.organizerName}}</h2>
+    <div class="row mx-2 my-3">
+        <div class="card col-md-6">
+            <div class="card-header text-center display-6"><u>New Donation</u></div>
+            <div class="card-body">
+                <form class="needs-validation" action="{% url 'donate' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="organizerId" value={{user.id}} hidden>
+                    <div class="mb-1">
+                        <label for="fullname">Full-Name<span class="text-danger">*</span></label>
+                        <input type="text" name="fullname" id="fullname" class="form-control">
+                        <small><label for="fullname_error" id="fullname_error" class="text-danger"></label></small>
+                    </div>
+                    <div class="mb-1">
+                        <label for="email">Email<span class="text-danger">*</span></label>
+                        <input type="email" name="email" id="email" class="form-control">
+                        <small><label for="email_error" id="email_error" class="text-danger"></label></small>
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleDataList" class="form-label">Blood Group<span class="text-danger">*</span></label>
+                        <input class="form-control" name="bloodgroup" list="BloodGroupOptions" id="BloodGroup" placeholder="Type to search...">
+                        <datalist id="BloodGroupOptions">
+                            <option value="O+ve">
+                            <option value="O-ve">
+                            <option value="A+ve">
+                            <option value="A-ve">
+                            <option value="B+ve">
+                            <option value="B-ve">
+                            <option value="AB+ve">
+                            <option value="AB-ve">
+                        </datalist>
+                        <small><label for="blood_group_error" id="blood_group_error" class="text-danger"></label></small>
+                    </div>
+                    <div class="mb-1">
+                        <label for="contact">Contact No.<span class="text-danger">*</span></label>
+                        <input type="number" name="contact" id="contact" class="form-control">
+                        <small><label for="contact_error" id="contact_error" class="text-danger"></label></small>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-primary w-100 my-2">
+                </form>
+            </div>
+        </div>
+        <div class="card ms-md-auto mt-md-0 mt-3 col-md-5">
+            <div class="card-header text-center display-6"><u>Successful-Donations</u></div>
+            <div class="card-body">
+                {% if doners %}
+                <table class="table table-sm table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Doner-Name</th>
+                            <th>B-Group</th>
+                        </tr>
+                    </thead>
+                    {% for i,d in range|custom_zip:doners %}
+                    <tbody>
+                        <tr>
+                            <th>{{i}}</th>
+                            <td>{{d.name}}</td>
+                            <td>{{d.b_group}}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <p class="lead">No Donations Yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock content %}

@@ -59,7 +59,7 @@
                             <p class={{message.tags}} >{{message}}</p>
                         {% endfor %}
                     {% endif %} {% endcomment %}
-                    <form class="needs-validation" action="{% url 'startCamp' %}" method="post">
+                    <form class="needs-validation" action="{% url 'verifyCamp' %}" method="post">
                         {% csrf_token %}
                         <div class="mb-1">
                             <label for="email">Email<span class="text-danger">*</span></label>
