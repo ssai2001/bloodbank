@@ -46,10 +46,11 @@ def donor_signup(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        contact = request.POST.get('contact')
 
         error = False
 
-        print(f_name, l_name, username, email, password, bloodgroup)
+        print(f_name, l_name, username, email, password, bloodgroup, contact)
 
         if customUser.objects.filter(username=username).exists():
             # print('SIC already taken')
@@ -70,7 +71,8 @@ def donor_signup(request):
                 b_group = bloodgroup,
                 username = username,
                 email = email,
-                password = password
+                password = password,
+                contact = contact
             )
             user.save()
             # print('user created')
@@ -86,6 +88,7 @@ def hospital_signup(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        contact = request.POST.get('contactno')
 
         error = False
 
@@ -110,6 +113,7 @@ def hospital_signup(request):
                 username = username,
                 email = email,
                 password = password,
+                contact = contact,
                 is_staff = True
             )
             user.save()

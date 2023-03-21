@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="row">
@@ -13,7 +14,7 @@
                             <p class={{message.tags}} >{{message}}</p>
                         {% endfor %}
                     {% endif %}
-                    <form class="needs-validation" action="{% url 'organize' %}" method="post" >
+                    <form class="needs-validation" action="{% url 'organize' %}" method="post" onsubmit="return validateOrganizer()">
                         {% csrf_token %}
                         <div class="mb-1">
                             <label for="organizationName">Organization Name<span class="text-danger">*</span></label>
@@ -32,7 +33,7 @@
                         </div>
                         <div class="mb-1">
                             <label for="date">Date<span class="text-danger">*</span></label>
-                            <input type="date" name="date" id="date" class="form-control">
+                            <input type="date" name="date" id="date" class="form-control" min=today>
                             <small><label for="date_error" id="date_error" class="text-danger"></label></small>
                         </div>
                         <div class="mb-1">
@@ -54,11 +55,11 @@
                     <u class="display-6">Start Camp</u>
                 </div>
                 <div class="card-body bg-info rounded-bottom">
-                    {% comment %} {% if messages %}
+                    {% if messages %}
                         {% for message in messages %}
                             <p class={{message.tags}} >{{message}}</p>
                         {% endfor %}
-                    {% endif %} {% endcomment %}
+                    {% endif %}
                     <form class="needs-validation" action="{% url 'verifyCamp' %}" method="post">
                         {% csrf_token %}
                         <div class="mb-1">
@@ -81,3 +82,7 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block js %}
+<script src="{% static 'js/organize-validator.js' %}"></script>
+{% endblock js %}

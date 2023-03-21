@@ -2,11 +2,13 @@ function validate(){
     const first_name = document.getElementById('first_name').value;
     const last_name = document.getElementById('last_name').value;
     const username = document.getElementById('username').value;
+    const contact = document.getElementById('contact').value;
     const BloodGroup = document.getElementById('BloodGroup').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const password2 = document.getElementById('password2').value;
-    console.log('First name:' + first_name.length )
+    console.log('First name:' + first_name.length)
+    console.log('Contact: ' + contact.length)
 
     let error = false
     
@@ -30,6 +32,22 @@ function validate(){
     else{
         document.getElementById('last_name_error').innerHTML = ''
         document.getElementById('last_name').setAttribute("class","form-control is-valid")
+    }
+
+    //contact no validation
+    if(contact === ""){
+        error = true
+        document.getElementById('contact_error').innerHTML = 'Contact No. is required.'
+        document.getElementById('contact').setAttribute("class","form-control is-invalid")
+    }
+    else if(contact.length != 10){
+        error = true
+        document.getElementById('contact_error').innerHTML = 'Please enter a valid Contact No.'
+        document.getElementById('contact').setAttribute("class","form-control is-invalid")
+    }
+    else{
+        document.getElementById('contact_error').innerHTML = ''
+        document.getElementById('contact').setAttribute("class","form-control is-valid")
     }
 
     //Blood Group Validation

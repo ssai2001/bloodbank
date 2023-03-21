@@ -3,6 +3,7 @@ function validate(){
     const hospital_name = document.getElementById('hospital_name').value;
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
+    const contact = document.getElementById('contact').value;
     const password = document.getElementById('password').value;
     const password2 = document.getElementById('password2').value;
     console.log('hospital name:' + hospital_name.length )
@@ -52,6 +53,22 @@ function validate(){
     else{
         document.getElementById('email_error').innerHTML = ""
         document.getElementById('email').setAttribute("class","form-control is-valid")
+    }
+
+    //contact no validation
+    if(contact === ""){
+        error = true
+        document.getElementById('contact_error').innerHTML = 'Contact No. is required.'
+        document.getElementById('contact').setAttribute("class","form-control is-invalid")
+    }
+    else if(contact.length != 10){
+        error = true
+        document.getElementById('contact_error').innerHTML = 'Please enter a valid Contact No.'
+        document.getElementById('contact').setAttribute("class","form-control is-invalid")
+    }
+    else{
+        document.getElementById('contact_error').innerHTML = ''
+        document.getElementById('contact').setAttribute("class","form-control is-valid")
     }
 
     // Password validation
