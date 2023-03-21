@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'user',
     'pages',
     'donationcamp',
+    'hospital',
+    'doner',
 ]
 
 MIDDLEWARE = [

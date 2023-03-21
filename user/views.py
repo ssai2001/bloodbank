@@ -17,7 +17,7 @@ def donor_signin(request):
             login(request, user)
             if 'next' in request.POST:
                 return redirect(request.POST.get("next"))
-            return redirect('index')
+            return redirect('doner_home')
         else:
             messages.error(request, "Invalid credentials")
     return render(request,'user/donor-signin.html')

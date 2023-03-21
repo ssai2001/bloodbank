@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>In Active Participation page...Under Development.</h1>
+    {% for c in camps  %}
+        <p>{{c.organizationName}} {{c.date}}</p>
+    {% endfor %}
+</div>
+{% endblock content %}

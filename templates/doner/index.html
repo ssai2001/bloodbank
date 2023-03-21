@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4">
+        {% if events %}  
+          <h2 class="display-5" style="text-align: center;"><u>Hey {{user.first_name}}! Upcoming Events:</u></h2>
+        {% else %}
+          <h1 style="text-align: center;">No Donation camps in your locality.</h1>
+        {% endif %}
+    </div>
+    <div class="accordion" id="accordionExample">
+        {% for e in events %}
+        <div class="accordion-item">
+            <div class="accordion-header" id="heading{{ e.id }}">
+                <button class="accordion-button collapsed"  type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ e.id }}" aria-expanded="true" aria-controls="collapse{{ e.id }}">
+                    <strong>At {{ e.organizationName }} on {{ e.date }}</strong>
+                </button>
+            </div>
+            <div id="collapse{{ e.id }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body" style="background-color: #80DEEA;">
+                    <p class="lead">{{ e.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

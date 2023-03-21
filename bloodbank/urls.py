@@ -20,5 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',include('user.urls')),
     path('',include('pages.urls')),
-    path('camp/',include('donationcamp.urls'))
+    path('camp/',include('donationcamp.urls')),
+    path('doner/',include('doner.urls')),
+    # path('hospital/',include('hospital.urls'))
 ]
