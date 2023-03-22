@@ -7,8 +7,8 @@ body {
 }
 
 .carousel-img {
-  height:610px;
-  width: 85%;
+  height:580px;
+  width: 82%;
 }
 
 .cards-wrapper {
@@ -32,6 +32,10 @@ body {
   border-top: 0;
   border-bottom: 0;
   margin-top: 20px;
+}
+
+.text-color{
+  color: white;
 }
 
 

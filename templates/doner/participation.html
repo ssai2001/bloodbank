@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
+{% load custom_template %}
 
 {% block content %}
 <div class="container">
-    <h1>In Active Participation page...Under Development.</h1>
-    {% for c in camps  %}
-        <p>{{c.organizationName}} {{c.date}}</p>
-    {% endfor %}
+    {% if camps %}
+    <h1 class="text-light"><u>Hey {{ user.first_name }}! See your paticipations</u></h1>
+    <table class="mt-5 table table-light table-sm table-hover text-center">
+        <thead>
+            <tr>
+                <th>Sl No.</th>
+                <th>Organization Name</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        {% for i,c in range|custom_zip:camps %}
+        <tbody>
+            <tr>
+                <th>{{i}}</th>
+                <td>{{c.organizationName}}</td>
+                <td>{{c.date}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="text-light">Hey {{ user.first_name }}! Participate in donation camps.</p>
+    {% endif %}
 </div>
 {% endblock content %}

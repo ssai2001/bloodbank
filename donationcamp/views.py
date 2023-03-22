@@ -14,6 +14,7 @@ def organize(request):
         date = request.POST.get('date')
         description = request.POST.get('shortDescription')
         password = randint(111111,999999)
+        # coupons = 
         
         print(orgname,fullname,email,date,description)
         
@@ -41,7 +42,7 @@ def organize(request):
     return render(request,'camp/organize.html')
 
 def delete_entry(request):
-    entry = organizerDetails.objects.get(organizerName="Sital")
+    entry = organizerDetails.objects.filter(organizerName="Pranjal Agrawal")
     entry.delete()
     return render(request,'camp/organize.html')
 

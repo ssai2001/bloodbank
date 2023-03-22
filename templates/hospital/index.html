@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/hospital-index.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-light"> Hello {{user.first_name}}!</h1><br>
+        <div class="row">
+            {% for b in blood %}
+                <div class="col-md-4 mx-auto">
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <p class="lead">Blood type: {{b.b_group}}</p>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <p class="lead">Quantity: {{b.quantity}} units</p>
+                                </div>
+                                <div class="col-auto ms-auto">
+                                    <p class="lead">Price:Rs 40/unit</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <form action="{% url 'add_to_cart' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="b_group" value={{b.b_group}}>
+                                    <div class="row">
+                                        <div class="col-md-6 g-1">
+                                            <div class="input-group">
+                                                <div class="dec btn btn-outline-secondary" type="button">-</div>
+                                                <input type="number" name="quantity" class="form-control text-center" value="1" readonly>
+                                                <div class="inc btn btn-outline-secondary" type="button">+</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 g-1">
+                                            <input type="submit" value="Add to cart" class="w-100 btn btn-primary">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'js/hospital-index.js' %}"></script>
+{% endblock js %}

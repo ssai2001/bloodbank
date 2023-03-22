@@ -14,11 +14,11 @@
     {% endblock css %}
     <title>Blood Bank</title>
 </head>
-<body style="background-color: lightcoral;">
+<body class="bg-dark">
     <div class="mx-lg-2">
         <nav class="navbar navbar-dark navbar-expand-lg sticky-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href='{% url 'index' %}'>Blood-Bank</a>
+                <a class="navbar-brand" href='{% url 'index' %}'> BLOODROP</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -34,17 +34,18 @@
                                     Welcome {{user.first_name}}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Order Blood</a></li>
-                                    <li><a class="dropdown-item" href="#">Track Order</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'hospital_home' %}">Order Blood</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'hospital_cart' %}">Cart</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'hospital_track_order' %}">Track Order</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Order History</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'hospital_order_history' %}">Order History</a></li>
                                 </ul>
                             </li>
                             <div class="vr text-light"></div>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href='{% url 'logout' %}'>Logout</a>
+                                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                             </li>
                             {% else %}
                             <li class="nav-item dropdown">

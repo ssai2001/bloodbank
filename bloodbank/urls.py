@@ -22,5 +22,5 @@ urlpatterns = [
     path('',include('pages.urls')),
     path('camp/',include('donationcamp.urls')),
     path('doner/',include('doner.urls')),
-    # path('hospital/',include('hospital.urls'))
+    path('hospital/',include('hospital.urls'))
 ]

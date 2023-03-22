@@ -1,3 +1,13 @@
 a {
     text-decoration: none;
 }
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+
+img {
+    height: 100px;
+    width: 100px;
+}

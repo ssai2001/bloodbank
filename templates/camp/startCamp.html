@@ -6,9 +6,10 @@
 {% endblock css %}
 
 {% block content %}
-    <h1>{{user.organizationName}}</h1> 
-    <h1>welcomes you to the Blood Donation Camp</h1>
-    <h2>Donations done under supervision of {{user.organizerName}}</h2>
+    <div class="container">
+        <h1 class="text-light">{{user.organizationName}}</h1> 
+        <h1 class="text-light">welcomes you to the Blood Donation Camp</h1>
+        <h2 class="text-light">Donations done under supervision of {{user.organizerName}}</h2>
     <div class="row mx-2 my-3">
         <div class="card col-md-6">
             <div class="card-header text-center display-6"><u>New Donation</u></div>
@@ -77,5 +78,6 @@
                 {% endif %}
             </div>
         </div>
+    </div>
     </div>
 {% endblock content %}

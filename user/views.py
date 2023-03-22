@@ -33,7 +33,7 @@ def hospital_signin(request):
             login(request, user)
             if 'next' in request.POST:
                 return redirect(request.POST.get("next"))
-            return redirect('index')
+            return redirect('hospital_home')
         else:
             messages.error(request, "Invalid credentials")
     return render(request,'user/hospital-signin.html')
@@ -88,7 +88,7 @@ def hospital_signup(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        contact = request.POST.get('contactno')
+        contact = request.POST.get('contact')
 
         error = False
 

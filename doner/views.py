@@ -24,6 +24,7 @@ def participation(request, user_email):
     # for o in organizers:
     #     print(o.organizationName,o.date)
     context = {
+        'range':range(1,len(organizers)+1),
         'camps':organizers,
     }
     return render(request,'doner/participation.html',context)
