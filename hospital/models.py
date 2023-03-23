@@ -12,7 +12,7 @@ class BloodDepot(models.Model):
     def __str__(self):
         return self.b_group
 
-class Orders(models.Model):
+class Order(models.Model):
     user = models.ForeignKey(customUser, on_delete=models.DO_NOTHING)
     orderDetails = models.CharField(max_length=500)
     totalPrice = models.FloatField()
@@ -21,4 +21,4 @@ class Orders(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.first_name

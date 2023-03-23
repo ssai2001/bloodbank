@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import BloodDepot,Orders
+from .models import BloodDepot,Order
 
 # Create your views here.
 
@@ -59,9 +59,9 @@ def placeOrder(request):
             b_type = BloodDepot.objects.get(b_group=b_group)
             price = int(quantity) * int(b_type.price)
             total_price += price
-            order_details += f"{b_group} x {quantity}"
+            order_details += f"{b_group}x{quantity},"
         try:
-            order = Orders.objects.create(
+            order = Order.objects.create(
                 user = request.user,
                 orderDetails = order_details,
                 totalPrice = total_price
@@ -77,4 +77,42 @@ def trackOrder(request):
     return render(request,'hospital/trackOrder.html')
 
 def orderHistory(request):
-    return render(request,'hospital/orderHistory.html')
+    orders = Order.objects.filter(user=request.user).order_by('-id')
+    list = []
+    total = []
+    for o in orders:
+        od = o.orderDetails
+        so = od.split(',')
+        # print(so)
+        items = []
+        i=0
+        total_price=0
+        for x,i in zip(so,range(len(so)-1)):
+            i=i+1
+            str = x.split('x')
+            # print(str)
+            b_group = str[0]
+            quantity = str[1]
+            b_type = BloodDepot.objects.get(b_group=b_group)
+            price = int(quantity) * int(b_type.price)
+            total_price += price
+            # print(total_price)
+            items.append({
+                'b_group':b_group,
+                'quantity':quantity,
+                'price':price,
+            })
+        total.append({
+            'id':o.id,
+            'delivered':o.is_delivered,
+            'created':o.created_at,
+            'total_price':total_price,
+        })
+        list.append(items)
+    # print(total)
+    # print(list)
+    context={
+        'list':list,
+        'total':total
+    }
+    return render(request,'hospital/orderHistory.html',context)

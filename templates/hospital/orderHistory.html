@@ -1,6 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load custom_template %}
+
 {% block content %}
-<div class="container text-light">
-    <h1>In order History...Underdevelopment</h1>
+<div class="container">
+    {% if list %}
+        <h2 class="text-light">Previous Orders</h2>
+        {% for items,t in list|custom_zip:total %}
+        <div class="row mx-3 my-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Order ID: #{{t.id}}</h3>
+                    <h6 class="text-muted">{{t.created}}</h6>
+                    <input type="text" id="status" value="{{t.delivered}}" hidden>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for i in items %}
+                        <div class="col-md-4 col-sm-auto">
+                            <p>Blood-Group: {{i.b_group}}</p>
+                            <p>Quantity: {{i.quantity}}</p>
+                            <p>Price: {{i.price}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <h3>Total Price: {{t.total_price}} </h3>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <h2 class="text-light">No Orders</h2>
+    {% endif %}
 </div>
 {% endblock content %}
+
+{% comment %} {% block js %}
+<script src="{% static 'js/hospital-orderHistory.js' %}"></script>
+{% endblock js %} {% endcomment %}
