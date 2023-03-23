@@ -1,9 +1,15 @@
 from django.contrib import admin
-from .models import BloodAvailability
+from .models import BloodDepot,Orders
 
 # Register your models here.
 
-class BloodAvailabilityAdmin(admin.ModelAdmin):
-    list_display = ('b_group','quantity')
+class BloodDepotAdmin(admin.ModelAdmin):
+    list_display = ('b_group','quantity','price')
 
-admin.site.register(BloodAvailability, BloodAvailabilityAdmin)
+class OrdersAdmin(admin.ModelAdmin):
+    list_display = ('user','orderDetails','totalPrice','is_delivered','created_at','updated_at')
+    list_editable = ('is_delivered',)
+    ordering = ('-id',)
+
+admin.site.register(BloodDepot, BloodDepotAdmin)
+admin.site.register(Orders, OrdersAdmin)
