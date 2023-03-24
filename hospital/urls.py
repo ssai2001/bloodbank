@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('',views.index,name='hospital_home'),
+    path('menu/',views.menu,name='hospital_menu'),
     path('cart/',views.cart,name='hospital_cart'),
     path('add-to-cart/',views.addToCart,name='add_to_cart'),
     path('delete/<str:b_group>',views.delete,name='delete_from_cart'),

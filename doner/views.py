@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from donationcamp.models import organizerDetails,donerDetails
+from . models import Coupons
+
+import openpyxl
 
 # Create your views here.
 
@@ -10,8 +13,17 @@ def index(request):
     }
     return render(request,'doner/index.html',context)
 
+def delete(request):
+    cpn = Coupons.objects.get(id=3)
+    cpn.delete()
+    return redirect('index')
+
 def coupons(request):
-    return render(request,'doner/coupons.html')
+    coupons = Coupons.objects.filter(user=request.user)
+    context = {
+        'coupons':coupons
+    }
+    return render(request,'doner/coupons.html',context)
 
 def participation(request, user_email):
     donations = donerDetails.objects.filter(email = user_email)

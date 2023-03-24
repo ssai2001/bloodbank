@@ -1,6 +1,10 @@
-string="O+ve x 2,O-ve x 3"
+import openpyxl
 
-s=string.split(',')
-for x in s:
-    str = x.split('x')
-    print(str[0],str[1])
+workbook = openpyxl.load_workbook('static/export1.xlsx')
+sheet = workbook.active
+
+cell_object = sheet.cell(row=1,column=1)
+print(cell_object.value)
+
+# sheet.delete_rows(idx=1)
+# workbook.save('static/export1.xlsx')

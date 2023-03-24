@@ -4,11 +4,14 @@ from .models import BloodDepot,Order
 # Create your views here.
 
 def index(request):
+    return render(request,'hospital/index.html')
+
+def menu(request):
     blood = BloodDepot.objects.all()
     context = {
         'blood':blood,
     }
-    return render(request,'hospital/index.html',context)
+    return render(request,'hospital/menu.html',context)
 
 def addToCart(request):
     if request.method == "POST":

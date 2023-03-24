@@ -2,7 +2,10 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from . models import organizerDetails,donerDetails
+from doner.models import Coupons
+from user.models import customUser
 from random import randint
+import openpyxl
 
 # Create your views here.
 
@@ -66,6 +69,7 @@ def verifyCamp(request):
     return render(request,'camp/organize.html')
 
 def startCamp(request):
+    global condition
     USER = request.session.get("USER")
     user = organizerDetails.objects.get(email=USER['email'])
     doners = donerDetails.objects.filter(organizerId=user.id)
@@ -85,7 +89,6 @@ def donate(request):
         contact = request.POST.get('contact')
         # print(organizerId,fullname,email,bloodgroup,contact)
         try:
-
             doner = donerDetails.objects.create(
                 organizerId = organizerDetails(organizerId),
                 name = fullname,
@@ -96,4 +99,28 @@ def donate(request):
             doner.save()
         except Exception as e:
             print(e)
-        return redirect('startCamp')
+        # Alloting Coupons to first 3 users only.
+        USER = request.session.get("USER")
+        user = organizerDetails.objects.get(email=USER['email'])
+        doners = donerDetails.objects.filter(organizerId=user.id)
+        if len(doners) < 4:
+            try:
+                doner = customUser.objects.get(email=email)
+                workbook = openpyxl.load_workbook('static/export1.xlsx')
+                sheet = workbook.active
+                cell_object = sheet.cell(row=1,column=1)
+                print(cell_object.value)
+                sheet.delete_rows(idx=1)
+                workbook.save('static/export1.xlsx')
+                try:
+                    coupon = Coupons.objects.create(
+                        user = customUser(doner.id),
+                        couponCode = cell_object.value
+                    )
+                    coupon.save()
+                except Exception as e:
+                    print(e)
+            except Exception as t:
+                print(t)
+    return redirect('startCamp')
+    
