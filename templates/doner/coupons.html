@@ -1,48 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_template %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/coupons.css' %}">
 {% endblock css %}
 {% block content %}
 <div class="container text-light">
     <div class="display-6 mb-3"><u>Hey {{user.first_name}}! View your coupons here</u></div>
-    {% for c in coupons %}
-    {% comment %} <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <div class="col-4 border-end"></div>
-                <div class="col-8 border-start">
-                    <div class="row">
-                        h6
+    {% if coupons %}
+        {% for c,t in coupons|custom_zip:time %}
+        <div class="row mt-2 text">
+            <div class="col mt-2 mx-auto">
+                <p class="lead">Use coupon to get 50% off in medicines on min purchase of Rs.1500</p>
+            </div>
+            <div class="col lead mt-2 mx-auto">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-7 cpn mx-auto">
+                        {{c.couponCode}}
+                    </div>
+                    <div class="col-xs-6 col-sm-4 cpy mx-auto text-center">
+                        <a href="#" data-bs-toggle="tooltip" data-bs-title="copy to clipboard">COPY</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> {% endcomment %}
-    {% comment %} <p>{{c.couponCode}}</p> {% endcomment %}
-    <div class="announcement my-5">
-        {% comment %} <span class="close">&#x2715;</span> {% endcomment %}
-        <div class="text">
-            <span class="is-desktop">
-                <strong>NETMEDS</strong>. Use Coupon for 50% OFF on purchase above Rs.1500 . Use Coupon
-            </span>
-            <span class="is-mobile">Use Coupon Code for <strong>50% OFF</strong></span>
-        </div>
-        <div class="coupon">
-            <input type="text" value="{{c.couponCode}}" id="couponCode" readonly />
-            <div class="tooltip">
-                <button onclick="myFunction()" onmouseout="outFunc()">
-                    <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-                    Copy
-                </button>
+            <div class="col mt-2 mx-auto d-none d-sm-none d-md-block">
+                <input type="datetime" name="cdates" class="form-control" value={{t.created_at}} hidden>
+                <p class="lead">Expires at: <span id="{{c.id}}"></span> </p>
             </div>
         </div>
-        {% comment %} <span id="{{c.id}}" class="is-desktop is-timer"></span> {% endcomment %}
-    </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    {% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function(element){
+            return new bootstrap.Tooltip(element);
+        });
+    });
+</script>
 {% endblock content %}
 
 {% block js %}
-{% comment %} <script src="{% static 'js/coupons.js' %}"></script> {% endcomment %}
+<script src="{% static 'js/coupons.js' %}"></script>
 {% endblock js %}
