@@ -6,3 +6,5 @@ from django.contrib.auth.models import AbstractUser
 class customUser(AbstractUser):
     b_group = models.CharField(max_length=5)
     contact = models.CharField(max_length=10)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)

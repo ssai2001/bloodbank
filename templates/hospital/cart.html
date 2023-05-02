@@ -15,8 +15,7 @@
                                 <img src="" alt="{{i.b_group}}">
                             </div>
                             <div class="col-md-8 col-sm-auto">
-                                <p><strong>Quantity: {{i.quantity}} units</strong></p>
-                                <p><strong>Price: <i class="bi bi-currency-rupee"></i>{{i.price}}</strong></p>
+                                <h4><strong>Quantity: {{i.quantity}} units</strong></h4>
                                 <div class="text-end">
                                     <a href="{% url 'delete_from_cart' i.b_group %}" class="btn me-auto btn-danger">Delete</a>
                                 </div>
@@ -30,8 +29,8 @@
         <div class="col-md-4 my-2">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="h1 text-center">Total Price</h1>
-                    <h3 class="h3 text-center"><i class="bi bi-currency-rupee"></i>{{total_price}}</h3>
+                    <h1 class="h1 text-center">Total Quantity</h1>
+                    <h3 class="h3 text-center">{{total_quantity}} Nos.</h3>
                     <a href="{% url 'place_order' %}" class="btn btn-primary centered">Place-Order</a>
                 </div>
             </div>

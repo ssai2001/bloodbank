@@ -2,7 +2,7 @@
 //The 'name' will correspond to the field ID to populate the results
 var cdates = document.getElementsByName('cdates')
 
-// console.log(cdates)
+// console.log(cdates[0].value)
 var i;
 var createdDate = {}
 
@@ -10,7 +10,7 @@ for (i=0;i < cdates.length;i++){
 	var date = new Date(cdates[i].value).getTime();
 	console.log(date)
 	date = new Date(date + (60 * 24 * 60 * 60 * 1000))
-	createdDate[i+4] = date
+	createdDate[i] = date
 	console.log(date)
 }
 // var createdDate = {
@@ -28,6 +28,7 @@ var timer = setInterval(function() {
     //Iterate through the due dates
     for (var dueDateId in createdDate)
     {
+        console.log(dueDateId)
         //Get the due date for this record
         dueDate = new Date(createdDate[dueDateId]);
         // Find the distance between now an the due date

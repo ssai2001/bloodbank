@@ -1,4 +1,39 @@
 // console.log('Js Working')
+function initMap() {
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const pos={
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                document.getElementById('latitude').value = pos.lat
+                document.getElementById('longitude').value = pos.lng
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: pos.lat, lng: pos.lng },
+                    zoom: 14,
+                });
+                // Add a marker to the map
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: {lat: pos.lat, lng: pos.lng},
+                    draggable: true
+                });
+                // Get the marker's coordinates when it is dragged
+                marker.addListener('dragend', function() {
+                    var position = marker.getPosition();
+                    var latitude = position.lat();
+                    var longitude = position.lng();
+                    document.getElementById('latitude').value = latitude
+                    document.getElementById('longitude').value = longitude
+                    console.log('Latitude:', latitude);
+                    console.log('Longitude:', longitude);
+                });
+            }
+        )
+    }
+}
+
 function validate(){
     const hospital_name = document.getElementById('hospital_name').value;
     const username = document.getElementById('username').value;

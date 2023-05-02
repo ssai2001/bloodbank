@@ -21,10 +21,13 @@ def delete(request):
 def coupons(request):
     coupons = Coupons.objects.filter(user=request.user).order_by('-id')
     created_list = []
+    i=0
     for c in coupons:
         created_list.append({
+            'index':i,
             'created_at':str(c.created_at)
         })
+        i=i+1
     context = {
         'coupons':coupons,
         'time':created_list

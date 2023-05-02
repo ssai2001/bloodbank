@@ -7,11 +7,13 @@
 
 {% block content %}
     <div class="container my-3">
+        
         <div class="row">
-            <div class="col-lg-6 mx-auto">
+            <div class="col-lg-8 mx-auto">
                 <div class="card p-4 shadow-lg">
                     <div class="card-body pb-0 row">
                         <div class="col-6">
+                            
                             <a class="btn btn-light" href="{% url 'donor_signup' %}"><h4>Donor Sign-Up</h4></a>
                         </div>
                         {% if request.get_full_path|stringformat:"s" == "/user/hospital/signup" %}
@@ -29,6 +31,7 @@
                         <form class="needs-validation" action="{% url 'hospital_signup' %}" method="post" onsubmit="return validate();">
                             {% csrf_token %}
                             <div class="mb-1">
+                                
                                 <label for="hospital_name">Hospital Name<span class="text-danger">*</span></label>
                                 <input type="text" name="hospital_name" id="hospital_name" class="form-control">
                                 <small><label for="hospital_name_error" id="hospital_name_error" class="text-danger"></label></small>
@@ -60,6 +63,12 @@
                                 <input type="password" name="password2" id="password2" class="form-control">
                                 <small><label for="password2_error" id="password2_error" class="text-danger"></label></small>
                             </div>
+                            <div class="mb-1">
+                                <label for="location">Please check Location Of Hospital<span class="text-danger">*</span></label>
+                                <div id="map" style="height: 500px;width: 100%;">Map</div>
+                                <input type="text" name="latitude" id="latitude" hidden>
+                                <input type="text" name="longitude" id="longitude" hidden>
+                            </div>
                             <input type="submit" value="Register" class="btn btn-primary w-100 my-2">
                         </form>
                     </div>
@@ -70,5 +79,6 @@
 {% endblock content %}
 
 {% block js %}
+
     <script src="{% static 'js/hospital-sign-up-validator.js' %}"></script>
 {% endblock js %}

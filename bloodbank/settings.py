@@ -75,6 +75,8 @@ TEMPLATES = [
     },
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+
 WSGI_APPLICATION = 'bloodbank.wsgi.application'
 
 

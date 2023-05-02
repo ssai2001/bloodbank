@@ -1,20 +1,46 @@
 from django.shortcuts import render,redirect
-from .models import BloodDepot,Order
+from .models import BloodBank,Order
 
 # Create your views here.
 
-def index(request):
-    return render(request,'hospital/index.html')
 
-def menu(request):
-    blood = BloodDepot.objects.all()
+def index(request):
+    if request.session.get('orders'):
+        del request.session['orders']
+    lat = request.user.latitude
+    # print(lat)
+    lng = request.user.longitude
+    # print(lng)
+    un_blood_bank = []
+    bloodbanks = BloodBank.objects.all()
+    for b in bloodbanks:
+        dist = {}
+        dist['id'] = b.id
+        dist['blood_bank_name'] = b.blood_bank_name
+        distance = (((b.latitude-lat)**2) + ((b.longitude-lng)**2))
+        dist['distance'] = distance
+        un_blood_bank.append(dist)
+    # print(un_blood_bank)
+    o_blood_bank = (sorted(un_blood_bank,key=lambda x:x['distance']))
+    # print(o_blood_bank)
+    context = {
+        'nearest':o_blood_bank
+    }
+    return render(request,'hospital/index.html',context)
+
+def menu(request, bb_id):
+    global id 
+    id = bb_id
+    blood = BloodBank.objects.get(id = bb_id)
     context = {
         'blood':blood,
     }
+    # print(blood)
     return render(request,'hospital/menu.html',context)
 
 def addToCart(request):
     if request.method == "POST":
+        print(id)
         b_group = request.POST.get('b_group')
         quantity = request.POST.get('quantity')
         order = {}
@@ -23,27 +49,24 @@ def addToCart(request):
         order[b_group] = quantity
         request.session["orders"] = order
         print(order)
-        return redirect('hospital_home')
+        return redirect('hospital_menu',id)
 
         
 def cart(request):
     orders = request.session.get('orders')
     items = []
-    total_price=0
+    total_quantity=0
     if orders:
         for b_group,quantity in orders.items():
-            b_type = BloodDepot.objects.get(b_group=b_group)
-            price = int(quantity) * int(b_type.price)
-            total_price += price
             items.append({
                 'b_group':b_group,
                 'quantity':quantity,
-                'price':price
             })
+            total_quantity+=int(quantity)
     print(items)
     context={
         'items':items,
-        'total_price':total_price
+        'total_quantity':total_quantity
     }
     return render(request,'hospital/cart.html',context)
 
@@ -55,21 +78,44 @@ def delete(request, b_group):
 
 def placeOrder(request):
     orders = request.session.get('orders')
+    blood_list = {
+        'O+ve':0,
+        'O-ve':0,
+        'A+ve':0,
+        'A-ve':0,
+        'B+ve':0,
+        'B-ve':0,
+        'AB+ve':0,
+        'AB-ve':0,
+    }
     if orders:
         order_details=""
-        total_price=0
+        total_quantity=0
         for b_group,quantity in orders.items():
-            b_type = BloodDepot.objects.get(b_group=b_group)
-            price = int(quantity) * int(b_type.price)
-            total_price += price
+            blood_list[b_group] = int(quantity)
+            total_quantity += int(quantity)
             order_details += f"{b_group}x{quantity},"
+        print(blood_list)
         try:
             order = Order.objects.create(
                 user = request.user,
                 orderDetails = order_details,
-                totalPrice = total_price
+                totalQuantity = total_quantity
             )
             order.save()
+        except Exception as e:
+            print(e)
+        try:
+            blood = BloodBank.objects.get(id = id)
+            blood.o_pos_group -= int(blood_list['O+ve'])
+            blood.o_neg_group -= int(blood_list['O-ve'])
+            blood.a_pos_group -= int(blood_list['A+ve'])
+            blood.a_neg_group -= int(blood_list['A-ve'])
+            blood.b_pos_group -= int(blood_list['B+ve'])
+            blood.b_neg_group -= int(blood_list['B-ve'])
+            blood.ab_pos_group -= int(blood_list['AB+ve'])
+            blood.ab_neg_group -= int(blood_list['AB-ve'])
+            blood.save()
         except Exception as e:
             print(e)
         del request.session['orders']
@@ -89,27 +135,24 @@ def orderHistory(request):
         # print(so)
         items = []
         i=0
-        total_price=0
+        total_quantity=0
         for x,i in zip(so,range(len(so)-1)):
             i=i+1
             str = x.split('x')
             # print(str)
             b_group = str[0]
             quantity = str[1]
-            b_type = BloodDepot.objects.get(b_group=b_group)
-            price = int(quantity) * int(b_type.price)
-            total_price += price
+            total_quantity += int(quantity)
             # print(total_price)
             items.append({
                 'b_group':b_group,
                 'quantity':quantity,
-                'price':price,
             })
         total.append({
             'id':o.id,
             'delivered':o.is_delivered,
             'created':o.created_at,
-            'total_price':total_price,
+            'total_quantity':total_quantity,
         })
         list.append(items)
     # print(total)

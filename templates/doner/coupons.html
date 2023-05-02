@@ -25,7 +25,7 @@
             </div>
             <div class="col mt-2 mx-auto d-none d-sm-none d-md-block">
                 <input type="datetime" name="cdates" class="form-control" value={{t.created_at}} hidden>
-                <p class="lead">Expires at: <span id="{{c.id}}"></span> </p>
+                <p class="lead">Expires at: <span id="{{t.index}}"></span> {{t.index}} </p>
             </div>
         </div>
         {% endfor %}

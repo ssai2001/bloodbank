@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
+def loadmaps(request):
+    return render(request,'user/maps.html')
 def donor_signin(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -47,7 +48,7 @@ def donor_signup(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         contact = request.POST.get('contact')
-
+        
         error = False
 
         print(f_name, l_name, username, email, password, bloodgroup, contact)
@@ -89,10 +90,14 @@ def hospital_signup(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         contact = request.POST.get('contact')
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        latitude = float(latitude)
+        longitude = float(longitude)
 
         error = False
 
-        print(h_name, username, email, password)
+        print(h_name, username, email, password, latitude, longitude)
 
         if customUser.objects.filter(username=username).exists():
             # print('SIC already taken')
@@ -114,6 +119,8 @@ def hospital_signup(request):
                 email = email,
                 password = password,
                 contact = contact,
+                latitude = latitude,
+                longitude = longitude,
                 is_staff = True
             )
             user.save()

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     <div class="container">
         <h1 class="text-light"> Hello {{user.first_name}}!</h1><br>
@@ -12,22 +12,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td><a href="{% url 'hospital_menu' %}">Indian Red Cross Society, Odisha State Branch</a></td>
-                <td>Near Canara Bank, UNIT- 9, Bhubaneswar, Odisha 751004</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td><a href="">Odisha Red Cross Blood Bank Bhubaneshwar Municipal Hospital</a></td>
-                <td>Samantarapur, Old Town, Bhubaneswar, Odisha 751002</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td><a href="">Odisha Blood Bank</a></td>
-                <td>Unit 6, Capital Hospital Campus, Bhubaneswar, Odisha 751001</td>
-              </tr>
+              {% for n in nearest %}
+                <tr>
+                  <th scope="row">1</th>
+                  <td><a href="{% url 'hospital_menu' n.id %}"> {{n.blood_bank_name}} </a></td>
+                  <td>{{n.distance}}</td>
+                </tr>
+              {% endfor %}
             </tbody>
           </table>
     </div>
 {% endblock content %}
+{% block js %}
+    <script src="{% static 'js/hospital-index.js' %}"></script>
+{% endblock js %}

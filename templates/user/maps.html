@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p class="lead text-light">
+    Inside maps
+</p>
+<div id="map" style="height: 500px; width: 100%;" class="bg-light">Map</div>
+
+<script>
+    function initMap() {
+        document.getElementById('map').innerHTML="Signup"
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 37.7749, lng: -122.4194},
+            zoom: 8
+        });
+        
+    }
+</script>
+{% endblock content %}
