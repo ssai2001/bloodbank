@@ -2,7 +2,7 @@ from django.db import models
 from user.models import customUser
 
 # Create your models here.
-    
+
 class BloodBank(models.Model):
     blood_bank_name = models.CharField(max_length=100)
     o_pos_group = models.IntegerField()
@@ -20,10 +20,14 @@ class BloodBank(models.Model):
     def __str__(self):
         return self.blood_bank_name
 
-class Order(models.Model):
+class BloodOrder(models.Model):
     user = models.ForeignKey(customUser, on_delete=models.DO_NOTHING)
     orderDetails = models.CharField(max_length=500)
     totalQuantity = models.IntegerField(null=True)
+    sourceLatitude = models.FloatField()
+    sourceLongitude = models.FloatField()
+    destinationLatitude = models.FloatField()
+    destinationLongitude = models.FloatField()
     is_delivered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

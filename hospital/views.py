@@ -1,5 +1,8 @@
 from django.shortcuts import render,redirect
-from .models import BloodBank,Order
+from django.http import JsonResponse
+
+from .models import BloodBank,BloodOrder
+
 
 # Create your views here.
 
@@ -97,8 +100,15 @@ def placeOrder(request):
             order_details += f"{b_group}x{quantity},"
         print(blood_list)
         try:
-            order = Order.objects.create(
+            b_bank = BloodBank.objects.get(id=id)
+            print(b_bank.id)
+            print(request.user.id)
+            order = BloodOrder.objects.create(
                 user = request.user,
+                sourceLatitude = b_bank.latitude,
+                sourceLongitude = b_bank.longitude,
+                destinationLatitude = request.user.latitude,
+                destinationLongitude = request.user.longitude,
                 orderDetails = order_details,
                 totalQuantity = total_quantity
             )
@@ -126,7 +136,7 @@ def trackOrder(request):
     return render(request,'hospital/trackOrder.html')
 
 def orderHistory(request):
-    orders = Order.objects.filter(user=request.user).order_by('-id')
+    orders = BloodOrder.objects.filter(user=request.user).order_by('-id')
     list = []
     total = []
     for o in orders:
@@ -162,3 +172,23 @@ def orderHistory(request):
         'total':total
     }
     return render(request,'hospital/orderHistory.html',context)
+
+
+# Track Order
+def my_ajax_view(request):
+    try:
+        coordinates = BloodOrder.objects.get(is_delivered=False,user_id=request.user.id)
+        print(coordinates)
+    except Exception as e:
+        print(e)
+    points = {
+        'source_latitude':coordinates.sourceLatitude,
+        'source_longitude':coordinates.sourceLongitude,
+        'destination_latitude':coordinates.destinationLatitude,
+        'destination_longitude':coordinates.destinationLongitude
+    }
+    print(points)
+    data = {
+        'coordinates': points
+    }
+    return JsonResponse(data)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BloodBank,Order
+from .models import BloodBank,BloodOrder
 
 # Register your models here.
 
@@ -12,4 +12,4 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 admin.site.register(BloodBank,BloodBankAdmin)
-admin.site.register(Order, OrderAdmin)
+admin.site.register(BloodOrder, OrderAdmin)

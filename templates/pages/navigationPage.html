@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container text-light">
+    <h2>Delivery Boy Tracking Page</h2>
+    <div>
+      <input type="button" id="show" value="Start Navigation" />
+      <input type="button" id="stop" value="Stop Navigation" />
+      <input type="number" id="destinationlatitude" value="{{ latitude }}" hidden />
+      <input type="number" id="destinationlongitude" value="{{ longitude }}" hidden />
+      <input type="number" id="userId" value="{{ track_id }}" hidden />
+      <div id="map" style="height: 500px; width: 100%;"></div>
+    </div>
+  </div>
+  <script>
+    var destinationlatitude = parseFloat(document.getElementById('destinationlatitude').value)
+    var destinationlongitude = parseFloat(document.getElementById('destinationlongitude').value)
+    var user_id = parseInt(document.getElementById('userId').value)
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+      if (navigator.geolocation) {
+        myTimer = setInterval(()=>{
+        console.log('count-start')
+    
+        navigator.geolocation.getCurrentPosition((position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+          console.log(pos)
+          var data = {
+            user_id: user_id,
+            lat: pos.lat,
+            long: pos.lng
+          }
+          console.log(data)
+          $.ajax({
+            url: 'http://127.0.0.1:8000/ajax-insert/',
+            method: 'POST',
+            data: data,
+            success: function (response) {
+              console.log('Data saved successfully.')
+            },
+            error: function (xhr, status, error) {
+              console.error('Error saving data:', error)
+            }
+          })
+          var start = new google.maps.LatLng(pos.lat,pos.lng)
+          //console.log(start)
+          var end = new google.maps.LatLng(destinationlatitude,destinationlongitude)
+    
+          directionsService
+            .route({
+              origin: start,
+              destination: end,
+              travelMode: google.maps.TravelMode.DRIVING
+            })
+            .then((response) => {
+              directionsRenderer.setDirections(response)
+            })
+            .catch((e) => window.alert('Directions request failed due to ' + e))
+        })
+        },4000)
+      }
+    }
+    
+    function initMap() {
+      const directionsService = new google.maps.DirectionsService()
+      const directionsRenderer = new google.maps.DirectionsRenderer()
+      var bbsr = new google.maps.LatLng(20.2694075, 85.8605286)
+      const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: bbsr
+      })
+    
+      directionsRenderer.setMap(map)
+      var show = document.getElementById('show')
+      var stop = document.getElementById('stop')
+      show.addEventListener('click', function () {
+        console.log('showing direction')
+        calculateAndDisplayRoute(directionsService, directionsRenderer)
+      })
+      stop.addEventListener('click', function () {
+        console.log('Stopped navigation')
+        clearInterval(myTimer)
+      })
+    }
+    window.initMap = initMap
+  </script>
+{% endblock %}

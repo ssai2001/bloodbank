@@ -2,6 +2,62 @@
 
 {% block content %}
 <div class="container text-light">
-    <h1>In track Order...Under development.</h1>
+    <h1>Your Order is on the way... </h1>
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div id="map" style="height: 500px; width: 100%;"></div>
+        </div>
+    </div>
 </div>
+<script>
+    let myTimer = setInterval(calculateAndDisplayRoute,3000);
+    function calculateAndDisplayRoute(directionsService, directionsRenderer){
+        $.ajax({
+            url: 'http://127.0.0.1:8000/hospital/ajax-view/',
+            success: function(data) {
+                var source_latitude = parseFloat(data.coordinates.source_latitude)
+                var source_longitude = parseFloat(data.coordinates.source_longitude)
+                var destination_latitude = parseFloat(data.coordinates.destination_latitude)
+                var destination_longitude = parseFloat(data.coordinates.destination_longitude)
+                //console.log(parseFloat(data.coordinates.source_latitude))
+                //document.getElementById('my-output').innerHTML = data.coordinates.source_latitude + "," + data.coordinates.source_longitude
+                var start = new google.maps.LatLng(source_latitude,source_longitude)                    
+                var end = new google.maps.LatLng(destination_latitude,destination_longitude)
+                
+                directionsService
+                .route({
+                    origin: start,
+                    destination: end,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                })
+                .then((response) => {
+                    directionsRenderer.setDirections(response);
+                })
+                .catch((e) => window.alert("Directions request failed due to " + e));
+            }
+        });  
+    }
+
+    function initMap() {
+        const directionsService = new google.maps.DirectionsService();
+        const directionsRenderer = new google.maps.DirectionsRenderer();
+        var bbsr = new google.maps.LatLng(20.301129,85.795638);
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 11,
+            center: bbsr,
+        });
+        
+        directionsRenderer.setMap(map);
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+    }
+
+    window.initMap = initMap;
+    $(window).blur(function() {
+        clearInterval(myTimer);
+    });
+    
+    $(window).focus(function() {
+        myTimer = setInterval(calculateAndDisplayRoute, 3000);
+    });
+</script>
 {% endblock content %}
