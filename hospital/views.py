@@ -131,9 +131,20 @@ def placeOrder(request):
         del request.session['orders']
     return redirect('hospital_order_history')
 
-
 def trackOrder(request):
-    return render(request,'hospital/trackOrder.html')
+    try:
+        points = BloodOrder.objects.get(is_delivered=False,user_id=request.user.id)
+        context = {
+            'is_delivered':points.is_delivered
+        }
+        return render(request,'hospital/trackOrder.html',context)
+    except Exception as e:
+        print(e)
+    context={
+        'is_delivered':True
+    }
+    return render(request,'hospital/trackOrder.html',context)
+    
 
 def orderHistory(request):
     orders = BloodOrder.objects.filter(user=request.user).order_by('-id')

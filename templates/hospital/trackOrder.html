@@ -2,14 +2,21 @@
 
 {% block content %}
 <div class="container text-light">
-    <h1>Your Order is on the way... </h1>
-    <div class="row">
-        <div class="col-md-10 mx-auto">
-            <div id="map" style="height: 500px; width: 100%;"></div>
+    {% if is_delivered %}
+        <h1>No orders to Track, All are delivered</h1>
+    {% else %}
+        <h1>Your Order is on the way... </h1>
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div id="map" style="height: 500px; width: 100%;"></div>
+            </div>
         </div>
-    </div>
+    {% endif %}
 </div>
 <script>
+    {% if is_delivered %}
+        console.log('Nothing to display')
+    {% else %}
     let myTimer = setInterval(calculateAndDisplayRoute,3000);
     function calculateAndDisplayRoute(directionsService, directionsRenderer){
         $.ajax({
@@ -59,5 +66,6 @@
     $(window).focus(function() {
         myTimer = setInterval(calculateAndDisplayRoute, 3000);
     });
+    {% endif %}
 </script>
 {% endblock content %}
