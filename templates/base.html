@@ -11,15 +11,13 @@
     <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbGxdZSJGCuqf1LbL2uMJgbrGSq279RQs&callback=initMap"async defer></script>
-    <style>
-        #chatbot-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            height: 430px;
-            width: 350px;
-        }
-    </style>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger
+    intent="WELCOME"
+    chat-title="myintent"
+    agent-id="97364780-65c7-4341-af1b-7135201d32bc"
+    language-code="en"
+    ></df-messenger>
     {% block css %}
     
     {% endblock css %}
@@ -95,14 +93,7 @@
                 </div>
             </div>
         </nav>
-        <iframe class="chatbot-icon" id="chatbot-icon" src="https://bot.dialogflow.com/97364780-65c7-4341-af1b-7135201d32bc"></iframe>
-        <script>
-            var chatbot = document.getElementById('chatbot-icon')
-            chatbot.addEventListener("click",()=>{
-                console.log('chatbot-open')
-                
-            })
-        </script>
+        
         {% block content %}
         
         {% endblock content %}
