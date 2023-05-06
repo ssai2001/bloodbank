@@ -144,4 +144,4 @@ EMAIL_HOST_USER = config("USER_MAIL")
 EMAIL_HOST_PASSWORD = config("USER_PASSWORD")
 EMAIL_USE_TLS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.gcpbloodbank.live./','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://*.gcpbloodbank.live./','https://*.127.0.0.1','https://*.gcpbloodbank.live']

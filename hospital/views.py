@@ -22,6 +22,7 @@ def index(request):
         dist['blood_bank_name'] = b.blood_bank_name
         distance = (((b.latitude-lat)**2) + ((b.longitude-lng)**2))
         dist['distance'] = distance
+        dist['address'] = b.address
         un_blood_bank.append(dist)
     # print(un_blood_bank)
     o_blood_bank = (sorted(un_blood_bank,key=lambda x:x['distance']))

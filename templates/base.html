@@ -11,13 +11,7 @@
     <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbGxdZSJGCuqf1LbL2uMJgbrGSq279RQs&callback=initMap"async defer></script>
-    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-    <df-messenger
-    intent="WELCOME"
-    chat-title="myintent"
-    agent-id="97364780-65c7-4341-af1b-7135201d32bc"
-    language-code="en"
-    ></df-messenger>
+    
     {% block css %}
     
     {% endblock css %}
@@ -112,7 +106,39 @@
     </div>
 </body>
 <script src="{% static 'bs5/js/bootstrap.bundle.js' %}"></script>
+
 {% block js %}
+
 {% endblock js %}
+{% if user.is_authenticated %}
+    {% if user.is_staff %}
+        {% comment %} <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+        <df-messenger
+        intent="WELCOME"
+        chat-title="BloodDrop"
+        agent-id="fce2a78f-d656-4adb-a1b0-fa4ea7a623c7"
+        language-code="en"
+        ></df-messenger> {% endcomment %}
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+        <df-messenger
+        chat-icon="https:&#x2F;&#x2F;www.google.com&#x2F;url?sa=i&ampurl=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fbot_4712109&amppsig=AOvVaw2v8sKx557d_qUGYTeeSMoW&ampust=1683471296261000&ampsource=images&ampcd=vfe&ampved=0CBEQjRxqFwoTCLCW5-X54P4CFQAAAAAdAAAAABAI"
+        intent="WELCOME"
+        chat-title="MyFAQ"
+        agent-id="5b7079eb-a825-43d6-9cab-5ce3b21cfd12"
+        language-code="en"
+        ></df-messenger>
+    {% endif %}
+{% else %}
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="PotentialDonor"
+  agent-id="3a4b5040-e717-410e-ac38-0fa9ba1fe833"
+  language-code="en"
+></df-messenger>
+<script>
+    console.log('FAQ chat Bot place')
+</script>
+{% endif %}
 
 </html>
