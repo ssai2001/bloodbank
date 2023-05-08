@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = "django-insecure-8yee#3*6&826o7-v6)hfvo9=7(^3#dhg7ila==d+#fkg7mz!_r"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -140,8 +140,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config("USER_MAIL")
-EMAIL_HOST_PASSWORD = config("USER_PASSWORD")
+EMAIL_HOST_USER = "psaimohancs@gmail.com"
+EMAIL_HOST_PASSWORD = "oltauimbhabblfyx"
 EMAIL_USE_TLS = True
 
 CSRF_TRUSTED_ORIGINS = ['https://*.gcpbloodbank.live./','https://*.127.0.0.1','https://*.gcpbloodbank.live']

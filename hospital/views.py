@@ -3,7 +3,6 @@ from django.http import JsonResponse
 
 from .models import BloodBank,BloodOrder
 
-
 # Create your views here.
 
 
