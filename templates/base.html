@@ -18,7 +18,7 @@
     <title>Blood Bank</title>
 </head>
 <body class="bg-dark">
-    <div class="mx-lg-2">
+    <div id="bdy" class="mx-lg-2">
         <nav class="navbar navbar-dark navbar-expand-lg sticky-top bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href='{% url 'index' %}'><img src="{% static 'images/icon-img-1.png' %}" alt="Logo"> BLOODROP</a>
@@ -91,7 +91,7 @@
         {% block content %}
         
         {% endblock content %}
-        <footer class="footer mt-auto bg-dark p-3 text-light">
+        <footer id="navbar" class="footer mt-auto bg-dark p-3 text-light">
             <div class="row lead">
                 <div class="col mx-auto">
                     <a href="mailto:sitalpanigrahi87@gmail.com"><i class="bi bi-envelope-at"></i> : E-Mail</a> <br>
@@ -130,6 +130,7 @@
 ></df-messenger>
 <script>
     console.log('FAQ chat Bot place')
+    
 </script>
 {% endif %}
 
