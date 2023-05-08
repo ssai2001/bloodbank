@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_template %}
 {% block content %}
     <div class="container">
         <h1 class="text-light"> Hello {{user.first_name}}!</h1><br>
@@ -12,9 +13,9 @@
               </tr>
             </thead>
             <tbody>
-              {% for n in nearest %}
+              {% for n,i in nearest|custom_zip:length %}
                 <tr>
-                  <th scope="row">1</th>
+                  <th scope="row"> {{i}} </th>
                   <td><a href="{% url 'hospital_menu' n.id %}"> {{n.blood_bank_name}} </a></td>
                   <td>{{n.address}}</td>
                 </tr>

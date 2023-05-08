@@ -15,9 +15,13 @@ def index(request):
     lng = request.user.longitude
     # print(lng)
     un_blood_bank = []
+    length = []
+    i=0
     bloodbanks = BloodBank.objects.all()
     for b in bloodbanks:
         dist = {}
+        i=i+1
+        length.append(i)
         dist['id'] = b.id
         dist['blood_bank_name'] = b.blood_bank_name
         distance = (((b.latitude-lat)**2) + ((b.longitude-lng)**2))
@@ -27,8 +31,10 @@ def index(request):
     # print(un_blood_bank)
     o_blood_bank = (sorted(un_blood_bank,key=lambda x:x['distance']))
     # print(o_blood_bank)
+    
     context = {
-        'nearest':o_blood_bank
+        'nearest':o_blood_bank,
+        'length':length
     }
     return render(request,'hospital/index.html',context)
 

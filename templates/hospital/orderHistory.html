@@ -8,7 +8,7 @@
         <h2 class="text-light">Previous Orders</h2>
         {% for items,t in list|custom_zip:total %}
         <div class="row mx-3 my-3">
-            <div class="card">
+            <div class="card {% if t.delivered %} bg-success {% endif %} ">
                 <div class="card-header">
                     <h3>Order ID: #{{t.id}}</h3>
                     <h6 class="text-muted">{{t.created}}</h6>

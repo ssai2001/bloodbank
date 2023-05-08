@@ -121,21 +121,22 @@
         ></df-messenger> {% endcomment %}
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <df-messenger
+            intent="WELCOME"
+            chat-title="PotentialDonor"
+            agent-id="3a4b5040-e717-410e-ac38-0fa9ba1fe833"
+            language-code="en"
+        ></df-messenger>
+    {% endif %}
+{% else %}
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger
         chat-icon="https:&#x2F;&#x2F;www.google.com&#x2F;url?sa=i&ampurl=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fbot_4712109&amppsig=AOvVaw2v8sKx557d_qUGYTeeSMoW&ampust=1683471296261000&ampsource=images&ampcd=vfe&ampved=0CBEQjRxqFwoTCLCW5-X54P4CFQAAAAAdAAAAABAI"
         intent="WELCOME"
         chat-title="MyFAQ"
         agent-id="5b7079eb-a825-43d6-9cab-5ce3b21cfd12"
         language-code="en"
-        ></df-messenger>
-    {% endif %}
-{% else %}
-<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-<df-messenger
-  intent="WELCOME"
-  chat-title="PotentialDonor"
-  agent-id="3a4b5040-e717-410e-ac38-0fa9ba1fe833"
-  language-code="en"
-></df-messenger>
+    ></df-messenger>
+
 <script>
     console.log('FAQ chat Bot place')
 </script>
