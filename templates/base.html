@@ -110,28 +110,6 @@
 {% block js %}
 
 {% endblock js %}
-{% if user.is_authenticated %}
-    {% if user.is_staff %}
-    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-    <df-messenger
-      intent="WELCOME"
-      chat-title="potDoner"
-      agent-id="321b571e-266c-47e5-9a6b-cf2cb462e98f"
-      language-code="en"
-    ></df-messenger>
-    {% endif %}
-{% else %}
-<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-<df-messenger
-  intent="WELCOME"
-  chat-title="FAQBOT"
-  agent-id="f35e0813-f92e-4794-9fde-3245c156d689"
-  language-code="en"
-></df-messenger>
-<script>
-    console.log('FAQ chat Bot place')
-    
-</script>
-{% endif %}
+
 
 </html>
