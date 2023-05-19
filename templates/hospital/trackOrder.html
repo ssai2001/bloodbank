@@ -20,7 +20,7 @@
     let myTimer = setInterval(calculateAndDisplayRoute,3000);
     function calculateAndDisplayRoute(directionsService, directionsRenderer){
         $.ajax({
-            url: 'https://gcpbloodbank.live/hospital/ajax-view/',
+            url: 'https://saimohan.pythonanywhere.com/hospital/ajax-view/',
             success: function(data) {
                 var source_latitude = parseFloat(data.coordinates.source_latitude)
                 var source_longitude = parseFloat(data.coordinates.source_longitude)
